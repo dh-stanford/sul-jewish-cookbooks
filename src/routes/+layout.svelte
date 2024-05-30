@@ -58,7 +58,6 @@
 			opacity: 0.5;
 
 			&:hover {
-				background: transparent;
 				opacity: 1;
 			}
 

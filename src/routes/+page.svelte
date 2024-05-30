@@ -96,6 +96,11 @@
 					height: 1.2rem;
 					width: 1.2rem;
 				}
+
+				&:hover {
+					color: white;
+					background-color: var(--primary-color);
+				}
 			}
 
 			thead th::before,

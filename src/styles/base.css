@@ -20,15 +20,10 @@ body > div {
 	height: 100vh;
 	margin: 0 auto;
 	max-width: 1680px;
-	padding: 2rem 2rem 1rem;
+	padding: 2rem 2rem min(2rem, 2vh);
 	width: 100vw;
 }
 
 a {
 	color: var(--primary-color);
-
-	&:hover {
-		color: white;
-		background-color: var(--primary-color);
-	}
 }
