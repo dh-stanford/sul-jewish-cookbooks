@@ -42,8 +42,8 @@
 					minmax(150px, 1.5fr) /* Organization */
 					80px /* Year */
 					minmax(100px, 0.5fr) /* State */
-					minmax(100px, 0.5fr) /* Location */
-					80px; /* SearchWorks */
+					minmax(115px, 0.5fr) /* Location */
+					minmax(50px, 0.2fr); /* SearchWorks */
 			}
 
 			thead {
@@ -55,6 +55,10 @@
 					height: 55px;
 					line-height: 55px;
 				}
+			}
+
+			tbody {
+				min-height: 50vh;
 			}
 
 			tr:nth-child(even) td,
