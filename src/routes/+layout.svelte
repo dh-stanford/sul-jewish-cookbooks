@@ -12,7 +12,7 @@
 
 <header>
 	<a href="https://library.stanford.edu/" target="_blank" rel="noopener noreferrer">
-		<img src={sulLogo} alt="Stanford University Libraries" />
+		<img src={sulLogo} width="41" height="40" alt="Stanford University Libraries" />
 	</a>
 	<h1>Jewish Cookbooks</h1>
 </header>

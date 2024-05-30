@@ -9,16 +9,15 @@
   `;
 </script>
 
-<label style="--svg:url(data:image/svg+xml;utf8,{encodeURIComponent(searchSvg)})">
-	<input
-		aria-label="Search"
-		aria-multiline="false"
-		placeholder="Search..."
-		spellcheck="false"
-		tabindex="0"
-		{...props}
-	/>
-</label>
+<input
+	aria-label="Search"
+	aria-multiline="false"
+	placeholder="Search..."
+	spellcheck="false"
+	style="--svg:url(data:image/svg+xml;utf8,{encodeURIComponent(searchSvg)})"
+	tabindex="0"
+	{...props}
+/>
 
 <style>
 	input {
@@ -29,6 +28,7 @@
 		border-radius: var(--border-radius, 5px);
 		border: 1px solid var(--primary-color);
 		color: var(--primary-color);
+		line-height: 1.1;
 		outline-color: var(--primary-color);
 		padding: 0.5rem 0.5rem 0.5rem 2rem;
 	}
