@@ -113,7 +113,7 @@
 		if (searchParts.length) {
 			const searchFields = fields.filter((field) => field.searchable);
 			filteredListItems = filteredListItems.filter((item) =>
-				searchParts.some((searchPart) =>
+				searchParts.every((searchPart) =>
 					searchFields.some(({ accessor }) => normalizeText(item[accessor]).includes(searchPart))
 				)
 			);
