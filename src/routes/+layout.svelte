@@ -25,6 +25,7 @@
 		href="https://github.com/dh-stanford/sul-jewish-cookbooks"
 		target="_blank"
 		rel="noopener noreferrer"
+		aria-label="GitHub Repository"
 	>
 		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 98 96">
 			<path
@@ -56,6 +57,7 @@
 			opacity: 0.5;
 
 			&:hover {
+				background: transparent;
 				opacity: 1;
 			}
 

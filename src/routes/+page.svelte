@@ -16,7 +16,7 @@
 	const formatLink = (id) => {
 		if (!id) return '';
 		return `
-		  <a href="https://searchworks.stanford.edu/view/${id}">
+		  <a href="https://searchworks.stanford.edu/view/${id}" aria-label="View on SearchWorks">
 				${externalLinkSvg}
 			</a>`;
 	};
