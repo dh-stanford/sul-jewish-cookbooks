@@ -1,10 +1,12 @@
 <script>
-	/**Field
+	/**
 	 * @typedef {Object} Field
 	 * @prop {string} key
 	 * @prop {string} label
 	 * @prop {number|string} accessor
 	 * @prop {boolean} sortable
+	 * @prop {boolean} html
+	 * @prop {(value: any) => string} [format]
 	 */
 
 	/**
@@ -89,9 +91,15 @@
 		{#each filteredAndPagedItems as item}
 			<tr>
 				{#each fields as field, i}
-					{@const value = item[field.accessor]}
+					{@const value = field.format ? field.format(item[field.accessor]) : item[field.accessor]}
 					{#if i === 0}
-						<th scope="row">{value}</th>
+						{#if field.html}
+							<th scope="row">{@html value}</th>
+						{:else}
+							<th scope="row">{value}</th>
+						{/if}
+					{:else if field.html}
+						<td>{@html value}</td>
 					{:else}
 						<td>{value}</td>
 					{/if}

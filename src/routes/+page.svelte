@@ -3,16 +3,6 @@
 
 	import recipes from '../data/recipes.json';
 
-	const fields = [
-		{ key: 'recipe', label: 'Recipe', accessor: 0, sortable: true },
-		{ key: 'book', label: 'Book', accessor: 4, sortable: true },
-		{ key: 'organization', label: 'Organization', accessor: 3, sortable: true },
-		{ key: 'year', label: 'Year', accessor: 5, sortable: true },
-		{ key: 'state', label: 'State', accessor: 1, sortable: true },
-		{ key: 'location', label: 'Location', accessor: 2, sortable: true },
-		{ key: 'link', label: 'Link', accessor: 6, sortable: false }
-	];
-
 	/** @param {string} text */
 	const titleCase = (text) => {
 		return text
@@ -21,6 +11,22 @@
 			.map((word) => word.charAt(0).toUpperCase() + word.substring(1))
 			.join(' ');
 	};
+
+	/** @param {string} id */
+	const formatLink = (id) => {
+		if (!id) return '';
+		return `<a href="https://searchworks.stanford.edu/view/${id}">${id}</a>`;
+	};
+
+	const fields = [
+		{ key: 'recipe', label: 'Recipe', accessor: 0, sortable: true, format: titleCase },
+		{ key: 'book', label: 'Book', accessor: 4, sortable: true },
+		{ key: 'organization', label: 'Organization', accessor: 3, sortable: true },
+		{ key: 'year', label: 'Year', accessor: 5, sortable: true },
+		{ key: 'state', label: 'State', accessor: 1, sortable: true },
+		{ key: 'location', label: 'Location', accessor: 2, sortable: true },
+		{ key: 'link', label: 'Link', accessor: 6, sortable: false, format: formatLink, html: true }
+	];
 </script>
 
 <Table data={recipes} {fields} class="recipes-table" />
