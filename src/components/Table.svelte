@@ -3,6 +3,8 @@
 
 	import SearchInput from '$components/SearchInput.svelte';
 
+	import loaderWebP from '../img/loading.webp';
+
 	/**
 	 * @typedef {Object} Field
 	 * @prop {string} key
@@ -163,7 +165,11 @@
 <table
 	aria-label="Jewish Cookbook Recipes"
 	aria-rowcount={pageSize}
-	style={`--n-columns: ${fields.length};--scrollbar-offset: ${scrollbarOffset}px;`}
+	style={`
+	  --n-columns: ${fields.length};
+		--scrollbar-offset: ${scrollbarOffset}px;
+		--loader: url(${loaderWebP});
+	`}
 	{...props}
 >
 	<thead>
@@ -293,8 +299,8 @@
 		position: relative;
 
 		&.loading::after {
-			background-color: rgba(255, 255, 255, 0.8);
-			content: 'Loading...';
+			background: rgba(255, 255, 255, 0.8) var(--loader) no-repeat center;
+			content: '';
 			display: grid;
 			height: 100%;
 			place-items: center;
