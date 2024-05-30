@@ -47,10 +47,10 @@
 	];
 </script>
 
-<Table data={recipes} {fields} class="recipes-table" />
+<Table data={recipes} {fields} id="recipes-table" />
 
 <style>
-	:global(.recipes-table) {
+	:global(#recipes-table) {
 		:global {
 			thead,
 			tbody {
@@ -126,6 +126,14 @@
 				&::before,
 				&::after {
 					opacity: 1;
+				}
+			}
+
+			/* 960px is where the table starts to overflow horizontally */
+			@media screen and (max-width: 959px) {
+				td.search {
+					justify-content: flex-start;
+					margin-top: 1rem;
 				}
 			}
 		}

@@ -18,7 +18,8 @@
 	 * @typedef {Object} TableProps
 	 * @prop {Array<Object|Array<any>>} data
 	 * @prop {Field[]} fields
-	 * @prop {string} class
+	 * @prop {string} [id]
+	 * @prop {string} [class]
 	 */
 
 	/** @type {TableProps} */
@@ -241,8 +242,9 @@
 		td.search {
 			display: flex;
 			grid-column: 1 / -1;
+			height: auto;
 			justify-content: flex-end;
-			margin-bottom: 1rem;
+			padding: 4px;
 		}
 	}
 
