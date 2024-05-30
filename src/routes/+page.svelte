@@ -76,7 +76,7 @@
 			}
 
 			tbody {
-				min-height: 50vh;
+				min-height: calc(var(--row-height) * 2);
 
 				tr:nth-child(even) td,
 				tr:nth-child(even) th {
