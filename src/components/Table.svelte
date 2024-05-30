@@ -7,7 +7,7 @@
 	 * @prop {string} label
 	 * @prop {number|string} accessor
 	 * @prop {boolean} sortable
-	 * @prop {boolean} html
+	 * @prop {boolean} [html]
 	 * @prop {(value: any) => string} [format]
 	 */
 
