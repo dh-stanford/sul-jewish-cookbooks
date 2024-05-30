@@ -17,6 +17,6 @@ body > div {
 	flex-direction: column;
 	gap: 2rem;
 	height: 100vh;
-	padding: 2rem;
+	padding: 2rem 2rem 1rem;
 	width: 100vw;
 }
