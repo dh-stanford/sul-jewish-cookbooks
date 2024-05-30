@@ -1,4 +1,5 @@
 <script>
+	import '@fontsource-variable/rosario';
 	import '../styles/reset.css';
 	import '../styles/base.css';
 	import sulLogo from '../img/sul.41x40.png';

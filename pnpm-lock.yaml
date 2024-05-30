@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@fontsource-variable/rosario':
+        specifier: ^5.0.14
+        version: 5.0.14
     devDependencies:
       '@sveltejs/adapter-static':
         specifier: ^3.0.0
@@ -209,6 +213,9 @@ packages:
   '@eslint/js@8.57.0':
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+
+  '@fontsource-variable/rosario@5.0.14':
+    resolution: {integrity: sha512-dVVuvcMQXn06esSzl2VgMWi0x6a4vZVqHQYb7W1ZVCjixRgstoJ7n5X2yG6RssmtyLYYUjbrE4kFEha8NHgt0A==}
 
   '@humanwhocodes/config-array@0.11.14':
     resolution: {integrity: sha512-3T8LkOmg45BV5FICb15QQMsyUSWrQ8AygVfC7ZG32zOalnqrilm018ZVCw0eapXux8FtA33q8PSRSstjee3jSg==}
@@ -1213,6 +1220,8 @@ snapshots:
       - supports-color
 
   '@eslint/js@8.57.0': {}
+
+  '@fontsource-variable/rosario@5.0.14': {}
 
   '@humanwhocodes/config-array@0.11.14':
     dependencies:
