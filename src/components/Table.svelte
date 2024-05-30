@@ -56,13 +56,55 @@
 		return text;
 	};
 
-	/** @param {string} text */
+	/**
+	 * @param {string} text
+	 * @returns {void}
+	 */
 	const prepSearchParts = (text) => {
 		searchParts = text
 			? normalizeText(text.replace(/<br>|[&/\\#,+()$~%.'":*?<>{}]|nbsp;/g, ' '))
 					.split(' ')
 					.slice(0, 8)
 			: [];
+	};
+
+	/**
+	 * @param {string|number} text
+	 * @returns {string}
+	 */
+	const markupMatches = (text) => {
+		if (typeof text !== 'string') text = String(text);
+		const matchExtents = /** @type {Array<[number, number]>} */ ([]);
+		const mergedExtents = /** @type {Array<[number, number]>} */ ([]);
+		let markedUp = text;
+		const searchContent = normalizeText(text);
+
+		searchParts.forEach((searchPart) => {
+			let idx = -1;
+			while ((idx = searchContent.indexOf(searchPart, idx + 1)) > -1)
+				matchExtents.push([idx, idx + searchPart.length]);
+		});
+
+		matchExtents
+			.sort((a, b) => a[0] - b[0])
+			.forEach(([start, end]) => {
+				const previousExtent = mergedExtents[mergedExtents.length - 1];
+				if (previousExtent && previousExtent[1] >= start) {
+					previousExtent[1] = Math.max(previousExtent[1], end);
+				} else {
+					mergedExtents.push([start, end]);
+				}
+			});
+
+		mergedExtents
+			.sort((a, b) => b[0] - a[0])
+			.forEach(([start, end]) => {
+				markedUp = `${markedUp.substring(0, start)}<mark>${markedUp.substring(
+					start,
+					end
+				)}</mark>${markedUp.substring(end)}`;
+			});
+		return markedUp;
 	};
 
 	const itemFilter = async () => {
@@ -160,17 +202,15 @@
 		{#each filteredAndPagedItems as item}
 			<tr>
 				{#each fields as field, i}
-					{@const value = field.format ? field.format(item[field.accessor]) : item[field.accessor]}
+					{@const formattedValue = field.format
+						? field.format(item[field.accessor])
+						: item[field.accessor]}
+					{@const value =
+						searchParts && field.searchable ? markupMatches(formattedValue) : formattedValue}
 					{#if i === 0}
-						{#if field.html}
-							<th scope="row">{@html value}</th>
-						{:else}
-							<th scope="row">{value}</th>
-						{/if}
-					{:else if field.html}
-						<td>{@html value}</td>
+						<th scope="row">{@html value}</th>
 					{:else}
-						<td>{value}</td>
+						<td>{@html value}</td>
 					{/if}
 				{/each}
 			</tr>
