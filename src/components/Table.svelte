@@ -1,4 +1,6 @@
 <script>
+	import { tick } from 'svelte';
+
 	/**
 	 * @typedef {Object} Field
 	 * @prop {string} key
@@ -19,6 +21,7 @@
 	/** @type {TableProps} */
 	let { data, fields, ...props } = $props();
 
+	let loading = $state(true);
 	let tbody = $state();
 	let scrollbarOffset = $state(0);
 
@@ -33,10 +36,14 @@
 			0 + (currentPage - 1) * pageSize,
 			0 + (currentPage - 1) * pageSize + pageSize
 		);
+		loading = false;
 	};
 
 	/** @param {Field} field */
-	const sortItems = (field) => {
+	const sortItems = async (field) => {
+		loading = true;
+		await tick();
+		await tick();
 		const { key, accessor } = field;
 		sortOrder = sortOrder === `${key}-asc` ? `${key}-desc` : `${key}-asc`;
 		const asc = sortOrder.endsWith('asc');
@@ -87,7 +94,7 @@
 		</tr>
 	</thead>
 
-	<tbody bind:this={tbody}>
+	<tbody bind:this={tbody} class:loading>
 		{#each filteredAndPagedItems as item}
 			<tr>
 				{#each fields as field, i}
@@ -173,6 +180,17 @@
 
 	tbody {
 		overflow-y: auto;
+		position: relative;
+
+		&.loading::after {
+			background-color: rgba(255, 255, 255, 0.8);
+			content: 'Loading...';
+			display: grid;
+			height: 100%;
+			place-items: center;
+			position: absolute;
+			width: 100%;
+		}
 	}
 
 	tr {
