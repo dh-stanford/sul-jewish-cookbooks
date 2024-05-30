@@ -1,13 +1,16 @@
 <script>
 	import { tick } from 'svelte';
 
+	import SearchInput from '$components/SearchInput.svelte';
+
 	/**
 	 * @typedef {Object} Field
 	 * @prop {string} key
 	 * @prop {string} label
 	 * @prop {number|string} accessor
-	 * @prop {boolean} sortable
 	 * @prop {boolean} [html]
+	 * @prop {boolean} [sortable]
+	 * @prop {boolean} [searchable]
 	 * @prop {(value: any) => string} [format]
 	 */
 
@@ -29,6 +32,7 @@
 	let filteredAndPagedItems = $state(/** @type {{[key: string]: number | string}[]} */ ([]));
 	let currentPage = $state(1);
 	let pageSize = $state(20);
+	let searchParts = $state(/** @type {string[]} */ ([]));
 	let sortOrder = $state();
 
 	const paginate = () => {
@@ -37,6 +41,42 @@
 			0 + (currentPage - 1) * pageSize + pageSize
 		);
 		loading = false;
+	};
+
+	/**
+	 * @param {string|number} text
+	 * @param {boolean} [stripAccents]
+	 * @returns {string}
+	 */
+	const normalizeText = (text, stripAccents = false) => {
+		if (typeof text !== 'string') text = String(text);
+		text = text.toLowerCase().replace(/\s+/g, ' ').trim();
+		if (stripAccents) text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+		return text;
+	};
+
+	/** @param {string} text */
+	const prepSearchParts = (text) => {
+		searchParts = text
+			? normalizeText(text.replace(/<br>|[&/\\#,+()$~%.'":*?<>{}]|nbsp;/g, ' '))
+					.split(' ')
+					.slice(0, 8)
+			: [];
+	};
+
+	const itemFilter = async () => {
+		filteredListItems = /** @type {{[key: string]: number | string}[]} */ (data);
+
+		if (searchParts.length) {
+			const searchFields = fields.filter((field) => field.searchable);
+			filteredListItems = filteredListItems.filter((item) =>
+				searchParts.some((searchPart) =>
+					searchFields.some(({ accessor }) => normalizeText(item[accessor]).includes(searchPart))
+				)
+			);
+		}
+		currentPage = 1;
+		paginate();
 	};
 
 	/** @param {Field} field */
@@ -75,6 +115,18 @@
 	{...props}
 >
 	<thead>
+		{#if fields.some(({ searchable }) => searchable)}
+			<tr>
+				<td class="search">
+					<SearchInput
+						oninput={(/** @type {InputEvent} */ event) => {
+							prepSearchParts(/** @type {HTMLInputElement} */ (event.target).value);
+							itemFilter();
+						}}
+					/>
+				</td>
+			</tr>
+		{/if}
 		<tr>
 			{#each fields as field}
 				{#if field.sortable}
@@ -119,7 +171,7 @@
 
 	<tfoot>
 		<tr>
-			<td colspan="7">
+			<td>
 				<div>
 					{#if filteredListItems.length === 0}
 						No results
@@ -160,7 +212,7 @@
 
 <style>
 	table {
-		--n-columns: 7;
+		--n-columns: 2;
 		--row-height: 35px;
 		--scrollbar-offset: 0px;
 
@@ -178,6 +230,13 @@
 
 	thead {
 		padding-right: var(--scrollbar-offset);
+
+		td.search {
+			display: flex;
+			grid-column: 1 / -1;
+			justify-content: flex-end;
+			margin-bottom: 1rem;
+		}
 	}
 
 	tbody {
