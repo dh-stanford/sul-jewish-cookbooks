@@ -96,6 +96,15 @@
 		paginate();
 	};
 
+	/** @param {string} searchValue */
+	const search = async (searchValue) => {
+		loading = true;
+		await tick();
+		await tick();
+		prepSearchParts(searchValue);
+		itemFilter();
+	};
+
 	$effect(() => {
 		const resizeObserver = new ResizeObserver(
 			([{ target }]) =>
@@ -119,10 +128,8 @@
 			<tr>
 				<td class="search">
 					<SearchInput
-						oninput={(/** @type {InputEvent} */ event) => {
-							prepSearchParts(/** @type {HTMLInputElement} */ (event.target).value);
-							itemFilter();
-						}}
+						oninput={(/** @type {InputEvent} */ event) =>
+							search(/** @type {HTMLInputElement} */ (event.target).value)}
 					/>
 				</td>
 			</tr>
