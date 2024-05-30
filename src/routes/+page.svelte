@@ -30,13 +30,20 @@
 	`;
 
 	const fields = [
-		{ key: 'recipe', label: 'Recipe', accessor: 0, sortable: true, format: titleCase },
-		{ key: 'book', label: 'Book', accessor: 4, sortable: true },
-		{ key: 'organization', label: 'Organization', accessor: 3, sortable: true },
+		{
+			key: 'recipe',
+			label: 'Recipe',
+			accessor: 0,
+			sortable: true,
+			format: titleCase,
+			searchable: true
+		},
+		{ key: 'book', label: 'Book', accessor: 4, sortable: true, searchable: true },
+		{ key: 'organization', label: 'Organization', accessor: 3, sortable: true, searchable: true },
 		{ key: 'year', label: 'Year', accessor: 5, sortable: true },
-		{ key: 'state', label: 'State', accessor: 1, sortable: true },
-		{ key: 'location', label: 'Location', accessor: 2, sortable: true },
-		{ key: 'link', label: '', accessor: 6, sortable: false, format: formatLink, html: true }
+		{ key: 'state', label: 'State', accessor: 1, sortable: true, searchable: true },
+		{ key: 'location', label: 'Location', accessor: 2, sortable: true, searchable: true },
+		{ key: 'link', label: '', accessor: 6, format: formatLink, html: true }
 	];
 </script>
 
@@ -70,16 +77,16 @@
 
 			tbody {
 				min-height: 50vh;
-			}
 
-			tr:nth-child(even) td,
-			tr:nth-child(even) th {
-				background: #f8f6ff;
-			}
+				tr:nth-child(even) td,
+				tr:nth-child(even) th {
+					background: #f8f6ff;
+				}
 
-			tbody tr:hover td,
-			tbody tr:hover th {
-				background: #d6daf0;
+				tr:hover td,
+				tr:hover th {
+					background: #d6daf0;
+				}
 			}
 
 			td:nth-child(4) {
