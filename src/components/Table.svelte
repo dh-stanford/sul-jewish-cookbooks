@@ -18,9 +18,20 @@
 	let { data, fields, ...props } = $props();
 
 	let tbody = $state();
+	let scrollbarOffset = $state(0);
+
 	let filteredListItems = $state(/** @type {{[key: string]: number | string}[]} */ (data));
-	let pageSize = $state();
+	let filteredAndPagedItems = $state(/** @type {{[key: string]: number | string}[]} */ ([]));
+	let currentPage = $state(1);
+	let pageSize = $state(20);
 	let sortOrder = $state();
+
+	const paginate = () => {
+		filteredAndPagedItems = filteredListItems.slice(
+			0 + (currentPage - 1) * pageSize,
+			0 + (currentPage - 1) * pageSize + pageSize
+		);
+	};
 
 	/** @param {Field} field */
 	const sortItems = (field) => {
@@ -32,11 +43,9 @@
 			if (a[accessor] > b[accessor]) return asc ? 1 : -1;
 			return 0;
 		});
-		// currentPage = 1;
-		// paginate();
+		currentPage = 1;
+		paginate();
 	};
-
-	let scrollbarOffset = $state(0);
 
 	$effect(() => {
 		const resizeObserver = new ResizeObserver(
@@ -46,12 +55,14 @@
 		);
 		resizeObserver.observe(tbody);
 	});
+
+	$effect(() => paginate());
 </script>
 
 <table
 	aria-label="Jewish Cookbook Recipes"
 	aria-rowcount={pageSize}
-	style={`--n-columns: ${fields.length};--scrollbar-offset: {scrollbarOffset}px;`}
+	style={`--n-columns: ${fields.length};--scrollbar-offset: ${scrollbarOffset}px;`}
 	{...props}
 >
 	<thead>
@@ -73,8 +84,9 @@
 			{/each}
 		</tr>
 	</thead>
+
 	<tbody bind:this={tbody}>
-		{#each filteredListItems.slice(0, 20) as item}
+		{#each filteredAndPagedItems as item}
 			<tr>
 				{#each fields as field, i}
 					{@const value = item[field.accessor]}
@@ -87,6 +99,46 @@
 			</tr>
 		{/each}
 	</tbody>
+
+	<tfoot>
+		<tr>
+			<td colspan="7">
+				<div>
+					{#if filteredListItems.length === 0}
+						No results
+					{:else}
+						{@const pageStart = pageSize * (currentPage - 1) + 1}
+						<span>
+							Showing <strong>{pageStart}</strong> to
+							<strong>
+								{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
+							</strong>
+							of <strong>{filteredListItems.length.toLocaleString()}</strong>
+						</span>
+
+						<button
+							disabled={currentPage === 1}
+							onclick={() => (currentPage -= 1)}
+							onkeypress={({ code }) => {
+								if (code === 'Enter') currentPage -= 1;
+							}}
+						>
+							&laquo; Previous
+						</button>
+						<button
+							disabled={currentPage * pageSize >= filteredListItems.length}
+							onclick={() => (currentPage += 1)}
+							onkeypress={({ code }) => {
+								if (code === 'Enter') currentPage += 1;
+							}}
+						>
+							Next &raquo;
+						</button>
+					{/if}
+				</div>
+			</td>
+		</tr>
+	</tfoot>
 </table>
 
 <style>
@@ -169,5 +221,41 @@
 		padding: 0 0.5rem;
 		height: var(--row-height);
 		line-height: var(--row-height);
+	}
+
+	tfoot td {
+		display: contents;
+
+		div {
+			margin-top: 2rem;
+			display: flex;
+			gap: 1rem;
+			align-items: center;
+
+			span {
+				flex-grow: 1;
+			}
+		}
+
+		button {
+			background-color: var(--primary-color);
+			border: 1px solid #d2d6dc;
+			border-radius: 5px;
+			color: #ffffff;
+			cursor: pointer;
+			line-height: 1;
+			padding: 5px 14px;
+			user-select: none;
+
+			&[disabled] {
+				cursor: not-allowed;
+				opacity: 0.5;
+			}
+
+			&:not([disabled]):hover {
+				background-color: #f7f7f7;
+				color: #3c4257;
+			}
+		}
 	}
 </style>
