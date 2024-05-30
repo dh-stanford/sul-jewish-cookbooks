@@ -15,8 +15,19 @@
 	/** @param {string} id */
 	const formatLink = (id) => {
 		if (!id) return '';
-		return `<a href="https://searchworks.stanford.edu/view/${id}">${id}</a>`;
+		return `
+		  <a href="https://searchworks.stanford.edu/view/${id}">
+				${externalLinkSvg}
+			</a>`;
 	};
+
+	const externalLinkSvg = `
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+			<path d="M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6" />
+			<path d="M11 13l9 -9" />
+			<path d="M15 4h5v5" />
+		</svg>	
+	`;
 
 	const fields = [
 		{ key: 'recipe', label: 'Recipe', accessor: 0, sortable: true, format: titleCase },
@@ -25,7 +36,7 @@
 		{ key: 'year', label: 'Year', accessor: 5, sortable: true },
 		{ key: 'state', label: 'State', accessor: 1, sortable: true },
 		{ key: 'location', label: 'Location', accessor: 2, sortable: true },
-		{ key: 'link', label: 'Link', accessor: 6, sortable: false, format: formatLink, html: true }
+		{ key: 'link', label: '', accessor: 6, sortable: false, format: formatLink, html: true }
 	];
 </script>
 
@@ -71,10 +82,20 @@
 				background: #d6daf0;
 			}
 
-			td:nth-child(4),
-			td:nth-child(7),
-			th:nth-child(7) {
+			td:nth-child(4) {
 				text-align: center;
+			}
+
+			td:nth-child(7) a {
+				align-items: center;
+				display: flex;
+				height: var(--row-height);
+				justify-content: center;
+
+				svg {
+					height: 1.2rem;
+					width: 1.2rem;
+				}
 			}
 
 			thead th::before,
