@@ -87,8 +87,10 @@
 							(sortOrder === `${field.key}-desc` && 'descending') ||
 							null}>{field.label}</th
 					>
-				{:else}
+				{:else if field.label}
 					<th scope="col">{field.label}</th>
+				{:else}
+					<td></td>
 				{/if}
 			{/each}
 		</tr>
