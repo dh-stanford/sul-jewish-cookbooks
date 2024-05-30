@@ -39,10 +39,10 @@
 				grid-template-columns:
 					minmax(250px, 1.25fr) /* Recipe */
 					minmax(150px, 1fr) /* Book */
-					minmax(150px, 1.25fr) /* Organization */
+					minmax(150px, 1.5fr) /* Organization */
 					80px /* Year */
-					minmax(100px, 0.75fr) /* State */
-					minmax(100px, 0.75fr) /* Location */
+					minmax(100px, 0.5fr) /* State */
+					minmax(100px, 0.5fr) /* Location */
 					80px; /* SearchWorks */
 			}
 
@@ -52,6 +52,8 @@
 				th {
 					font-size: 1.2rem;
 					font-weight: bold;
+					height: 55px;
+					line-height: 55px;
 				}
 			}
 
