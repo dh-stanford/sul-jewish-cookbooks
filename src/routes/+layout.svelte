@@ -14,7 +14,7 @@
 	<a href="https://library.stanford.edu/" target="_blank" rel="noopener noreferrer">
 		<img src={sulLogo} width="41" height="40" alt="Stanford University Libraries" />
 	</a>
-	<h1>Jewish Cookbooks</h1>
+	<h1><a href="/">Jewish Cookbooks</a></h1>
 </header>
 
 <main>
@@ -42,6 +42,14 @@
 		align-items: center;
 		display: flex;
 		gap: 1rem;
+
+		h1 a {
+			text-decoration: none;
+
+			&:hover {
+				border-bottom: 1px solid currentColor;
+			}
+		}
 	}
 
 	main {
