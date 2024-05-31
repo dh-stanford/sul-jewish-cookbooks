@@ -9,10 +9,10 @@
 body {
 	color: var(--primary-color);
 	font-family: var(--font-family);
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
-body > div {
+#sveltekit {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
