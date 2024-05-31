@@ -4,6 +4,8 @@
 	--tertiary-color: #f8f6ff;
 
 	--font-family: 'Rosario Variable', sans-serif;
+
+	--border-radius: 5px;
 }
 
 body {
@@ -26,4 +28,12 @@ body {
 
 a {
 	color: var(--primary-color);
+}
+
+.tooltip {
+	background-color: white;
+	color: var(--primary-color);
+	padding: 2px 0.5rem;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--primary-color);
 }

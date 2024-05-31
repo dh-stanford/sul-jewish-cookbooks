@@ -2,6 +2,7 @@
 	import { tick } from 'svelte';
 
 	import SearchInput from '$components/SearchInput.svelte';
+	import { tooltip } from '$lib/actions/tooltip';
 
 	import loaderWebP from '../img/loading.webp';
 
@@ -216,7 +217,7 @@
 					{#if i === 0}
 						<th scope="row">{@html value}</th>
 					{:else}
-						<td>{@html value}</td>
+						<td use:tooltip={{ content: value }}>{@html value}</td>
 					{/if}
 				{/each}
 			</tr>
