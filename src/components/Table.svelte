@@ -2,7 +2,7 @@
 	import { tick } from 'svelte';
 
 	import SearchInput from '$components/SearchInput.svelte';
-	import { tooltip } from '$lib/actions/tooltip';
+	import { tooltip } from '$lib/actions/tooltip-when-truncated';
 
 	import loaderWebP from '../img/loading.webp';
 
