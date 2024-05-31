@@ -1,5 +1,5 @@
 <script>
-	import { tick } from 'svelte';
+	import { sleep } from '$lib';
 
 	import SearchInput from '$components/SearchInput.svelte';
 	import { tooltip } from '$lib/actions/tooltip-when-truncated';
@@ -128,8 +128,8 @@
 	/** @param {Field} field */
 	const sortItems = async (field) => {
 		loading = true;
-		await tick();
-		await tick();
+		await sleep(0);
+
 		const { key, accessor } = field;
 		sortOrder = sortOrder === `${key}-asc` ? `${key}-desc` : `${key}-asc`;
 		const asc = sortOrder.endsWith('asc');
@@ -145,8 +145,7 @@
 	/** @param {string} searchValue */
 	const search = async (searchValue) => {
 		loading = true;
-		await tick();
-		await tick();
+		await sleep(0);
 		prepSearchParts(searchValue);
 		itemFilter();
 	};
