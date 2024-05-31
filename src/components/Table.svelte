@@ -10,7 +10,7 @@
 	 * @typedef {Object} Field
 	 * @prop {string} key
 	 * @prop {string} label
-	 * @prop {number|string} accessor
+	 * @prop {number|string} accessor - Accessor (object key or array index) for the field.
 	 * @prop {boolean} [html]
 	 * @prop {boolean} [sortable]
 	 * @prop {boolean} [searchable]
@@ -21,12 +21,13 @@
 	 * @typedef {Object} TableProps
 	 * @prop {Array<Object|Array<any>>} data
 	 * @prop {Field[]} fields
+	 * @prop {string|number} keyAccessor - Accessor (object key or array index) for the primary key.
 	 * @prop {string} [id]
 	 * @prop {string} [class]
 	 */
 
 	/** @type {TableProps} */
-	let { data, fields, ...props } = $props();
+	let { data, fields, keyAccessor, ...props } = $props();
 
 	let loading = $state(true);
 	let tbody = $state();
@@ -205,7 +206,7 @@
 	</thead>
 
 	<tbody bind:this={tbody} class:loading>
-		{#each filteredAndPagedItems as item}
+		{#each filteredAndPagedItems as item (item[keyAccessor])}
 			<tr>
 				{#each fields as field, i}
 					{@const formattedValue = field.format

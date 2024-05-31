@@ -45,9 +45,11 @@
 		{ key: 'location', label: 'Location', accessor: 2, sortable: true, searchable: true },
 		{ key: 'link', label: '', accessor: 6, format: formatLink, html: true }
 	];
+
+	recipes.forEach((recipe, i) => (recipe[7] = i));
 </script>
 
-<Table data={recipes} {fields} id="recipes-table" />
+<Table data={recipes} {fields} keyAccessor={7} id="recipes-table" />
 
 <style>
 	:global(#recipes-table) {
