@@ -4,15 +4,17 @@
 	--tertiary-color: #f8f6ff;
 
 	--font-family: 'Rosario Variable', sans-serif;
+
+	--border-radius: 5px;
 }
 
 body {
 	color: var(--primary-color);
 	font-family: var(--font-family);
-	overflow-x: hidden;
+	overflow: hidden;
 }
 
-body > div {
+#sveltekit {
 	display: flex;
 	flex-direction: column;
 	gap: 2rem;
@@ -26,4 +28,12 @@ body > div {
 
 a {
 	color: var(--primary-color);
+}
+
+.tooltip {
+	background-color: white;
+	color: var(--primary-color);
+	padding: 2px 0.5rem;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--primary-color);
 }
