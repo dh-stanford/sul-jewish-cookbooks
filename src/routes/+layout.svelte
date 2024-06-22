@@ -1,4 +1,5 @@
 <script>
+	import { base } from '$app/paths';
 	import '@fontsource-variable/rosario';
 	import '../styles/reset.css';
 	import '../styles/base.css';
@@ -14,7 +15,7 @@
 	<a href="https://library.stanford.edu/" target="_blank" rel="noopener noreferrer">
 		<img src={sulLogo} width="41" height="40" alt="Stanford University Libraries" />
 	</a>
-	<h1><a href="/">Jewish Cookbooks</a></h1>
+	<h1><a href="{base}/">Jewish Cookbooks</a></h1>
 </header>
 
 <main>
