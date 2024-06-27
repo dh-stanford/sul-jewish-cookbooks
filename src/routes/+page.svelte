@@ -38,11 +38,32 @@
 			format: titleCase,
 			searchable: true
 		},
-		{ key: 'book', label: 'Book', accessor: 4, sortable: true, searchable: true },
-		{ key: 'organization', label: 'Organization', accessor: 3, sortable: true, searchable: true },
-		{ key: 'year', label: 'Year', accessor: 5, sortable: true },
-		{ key: 'state', label: 'State', accessor: 1, sortable: true, searchable: true },
-		{ key: 'location', label: 'Location', accessor: 2, sortable: true, searchable: true },
+		{ key: 'book', label: 'Book', accessor: 4, sortable: true, searchable: true, filterable: true },
+		{
+			key: 'organization',
+			label: 'Organization',
+			accessor: 3,
+			sortable: true,
+			searchable: true,
+			filterable: true
+		},
+		{ key: 'year', label: 'Year', accessor: 5, sortable: true, filterable: true },
+		{
+			key: 'state',
+			label: 'State',
+			accessor: 1,
+			sortable: true,
+			searchable: true,
+			filterable: true
+		},
+		{
+			key: 'location',
+			label: 'Location',
+			accessor: 2,
+			sortable: true,
+			searchable: true,
+			filterable: true
+		},
 		{ key: 'link', label: '', accessor: 6, format: formatLink, html: true }
 	];
 

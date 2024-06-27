@@ -37,3 +37,12 @@ a {
 	border-radius: var(--border-radius);
 	border: 1px solid var(--primary-color);
 }
+
+.checkbox-multiselect {
+	background-color: white;
+	color: var(--primary-color);
+	padding: 0 0.5rem;
+	border-radius: var(--border-radius);
+	border: 1px solid var(--primary-color);
+	line-height: 1;
+}

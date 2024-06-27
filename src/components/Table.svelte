@@ -1,6 +1,7 @@
 <script>
 	import { sleep } from '$lib';
 
+	import CheckboxMultiSelect from '$components/CheckboxMultiSelect.svelte';
 	import SearchInput from '$components/SearchInput.svelte';
 	import { tooltip } from '$lib/actions/tooltip-when-truncated';
 
@@ -33,6 +34,8 @@
 	let tbody = $state();
 	let scrollbarOffset = $state(0);
 
+	let filterRowOpen = $state(false);
+
 	let filteredListItems = $state(/** @type {{[key: string]: number | string}[]} */ (data));
 	let filteredAndPagedItems = $state(/** @type {{[key: string]: number | string}[]} */ ([]));
 	let currentPage = $state(1);
@@ -58,6 +61,19 @@
 		text = text.toLowerCase().replace(/\s+/g, ' ').trim();
 		if (stripAccents) text = text.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 		return text;
+	};
+
+	const getOptions = (field) => {
+		const { accessor } = field;
+		const options = Object.entries(
+			data.reduce((acc, item) => {
+				const value = item[accessor];
+				acc[value] = (acc[value] || 0) + 1;
+				return acc;
+			}, {})
+		).map(([value, count]) => ({ value, label: `${value} (${count})` }));
+
+		return options;
 	};
 
 	/**
@@ -181,6 +197,7 @@
 						oninput={(/** @type {InputEvent} */ event) =>
 							search(/** @type {HTMLInputElement} */ (event.target).value)}
 					/>
+					<button onclick={() => (filterRowOpen = !filterRowOpen)}>filters</button>
 				</td>
 			</tr>
 		{/if}
@@ -202,6 +219,20 @@
 				{:else}
 					<td></td>
 				{/if}
+			{/each}
+		</tr>
+		<tr class="filters" class:open={filterRowOpen}>
+			{#each fields as field}
+				<td>
+					{#if field.filterable}
+						<CheckboxMultiSelect
+							class="checkbox-multiselect"
+							options={getOptions(field)}
+							selectId="abc"
+							onSelectedValuesUpdated={(values) => console.log(values)}
+						/>
+					{/if}
+				</td>
 			{/each}
 		</tr>
 	</thead>
@@ -277,6 +308,23 @@
 			height: auto;
 			justify-content: flex-end;
 			padding: 4px;
+		}
+	}
+
+	tr.filters {
+		--transition-duration: 0.5s;
+		td {
+			height: 0px;
+			transition: height var(--transition-duration) ease-in-out;
+		}
+
+		&.open td {
+			height: 40px;
+			/* overflow: visible; */
+			animation-duration: 0;
+			animation-delay: var(--transition-duration);
+			animation-name: set-overflow;
+			animation-fill-mode: forwards;
 		}
 	}
 
@@ -372,6 +420,16 @@
 
 		span {
 			flex-grow: 1;
+		}
+	}
+
+	@keyframes set-overflow {
+		from {
+			overflow: hidden;
+		}
+
+		to {
+			overflow: initial;
 		}
 	}
 </style>
