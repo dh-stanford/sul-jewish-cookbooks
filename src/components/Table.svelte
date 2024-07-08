@@ -224,38 +224,31 @@
 			</tr>
 		{/each}
 	</tbody>
-
-	<tfoot>
-		<tr>
-			<td>
-				<div>
-					{#if filteredListItems.length === 0}
-						No results
-					{:else}
-						{@const pageStart = pageSize * (currentPage - 1) + 1}
-						<span aria-live="assertive">
-							Showing <strong>{pageStart}</strong> to
-							<strong>
-								{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
-							</strong>
-							of <strong>{filteredListItems.length.toLocaleString()}</strong>
-						</span>
-
-						<button disabled={currentPage === 1} onclick={() => (currentPage -= 1)}>
-							&laquo; Previous
-						</button>
-						<button
-							disabled={currentPage * pageSize >= filteredListItems.length}
-							onclick={() => (currentPage += 1)}
-						>
-							Next &raquo;
-						</button>
-					{/if}
-				</div>
-			</td>
-		</tr>
-	</tfoot>
 </table>
+<div class="pagination">
+	{#if filteredListItems.length === 0}
+		No results
+	{:else}
+		{@const pageStart = pageSize * (currentPage - 1) + 1}
+		<span aria-live="assertive">
+			Showing <strong>{pageStart}</strong> to
+			<strong>
+				{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
+			</strong>
+			of <strong>{filteredListItems.length.toLocaleString()}</strong>
+		</span>
+
+		<button disabled={currentPage === 1} onclick={() => (currentPage -= 1)}>
+			&laquo; Previous
+		</button>
+		<button
+			disabled={currentPage * pageSize >= filteredListItems.length}
+			onclick={() => (currentPage += 1)}
+		>
+			Next &raquo;
+		</button>
+	{/if}
+</div>
 
 <style>
 	table {
@@ -370,18 +363,15 @@
 		line-height: var(--row-height);
 	}
 
-	tfoot td {
-		display: contents;
+	.pagination {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		margin-top: 2rem;
+		padding: 0 0.5rem;
 
-		div {
-			margin-top: 2rem;
-			display: flex;
-			gap: 1rem;
-			align-items: center;
-
-			span {
-				flex-grow: 1;
-			}
+		span {
+			flex-grow: 1;
 		}
 
 		button {
