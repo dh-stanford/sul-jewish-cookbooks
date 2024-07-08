@@ -232,7 +232,7 @@
 						No results
 					{:else}
 						{@const pageStart = pageSize * (currentPage - 1) + 1}
-						<span>
+						<span aria-live="assertive">
 							Showing <strong>{pageStart}</strong> to
 							<strong>
 								{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
