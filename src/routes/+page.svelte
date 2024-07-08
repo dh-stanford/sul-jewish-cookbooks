@@ -140,4 +140,29 @@
 			}
 		}
 	}
+
+	:global(.pagination) {
+		:global {
+			button {
+				background-color: var(--primary-color);
+				border: 1px solid #d2d6dc;
+				border-radius: 5px;
+				color: #ffffff;
+				cursor: pointer;
+				line-height: 1;
+				padding: 5px 14px;
+				user-select: none;
+
+				&[disabled] {
+					cursor: not-allowed;
+					opacity: 0.5;
+				}
+
+				&:not([disabled]):hover {
+					background-color: #f7f7f7;
+					color: #3c4257;
+				}
+			}
+		}
+	}
 </style>
