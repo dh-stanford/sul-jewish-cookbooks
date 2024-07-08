@@ -112,17 +112,17 @@
 				}
 			}
 
-			thead th::before,
-			thead th::after {
+			thead th button::before,
+			thead th button::after {
 				opacity: 0.3;
 			}
 
-			thead th[aria-sort]::before,
-			thead th[aria-sort]::after {
+			thead th[aria-sort] button::before,
+			thead th[aria-sort] button::after {
 				opacity: 1;
 			}
 
-			thead th[tabindex]:hover {
+			thead th button:hover {
 				background-color: #d6daf0;
 
 				&::before,

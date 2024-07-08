@@ -188,14 +188,15 @@
 			{#each fields as field}
 				{#if field.sortable}
 					<th
-						tabindex="0"
 						scope="col"
-						onclick={() => sortItems(field)}
-						onkeypress={({ key }) => key === 'Enter' && sortItems(field)}
 						aria-sort={(sortOrder === `${field.key}-asc` && 'ascending') ||
 							(sortOrder === `${field.key}-desc` && 'descending') ||
-							null}>{field.label}</th
+							null}
 					>
+						<button onclick={() => sortItems(field)}>
+							{field.label}
+						</button>
+					</th>
 				{:else if field.label}
 					<th scope="col">{field.label}</th>
 				{:else}
@@ -326,37 +327,49 @@
 		text-align: left;
 		font-weight: normal;
 
-		&[tabindex] {
+		button {
+			appearance: none;
+			background-color: transparent;
+			border: none;
+			color: inherit;
 			cursor: pointer;
+			font: inherit;
+			height: 100%;
+			left: 0;
+			padding: inherit;
+			position: absolute;
+			text-align: inherit;
+			top: 0;
+			width: 100%;
+
+			&:before,
+			&:after {
+				border: 6px solid transparent;
+				position: absolute;
+				display: block;
+				content: '';
+				height: 0;
+				right: 0.5rem;
+				top: 50%;
+				width: 0;
+			}
+		}
+
+		&:not([aria-sort]) button:before,
+		&[aria-sort='ascending'] button:before {
+			border-bottom-color: currentColor;
+			margin-top: -14px;
+		}
+
+		&:not([aria-sort]) button:after,
+		&[aria-sort='descending'] button:after {
+			border-top-color: currentColor;
+			margin-top: 3px;
 		}
 	}
 
 	tbody th {
 		text-align: left;
-	}
-
-	thead th[tabindex]:before,
-	thead th[tabindex]:after {
-		border: 6px solid transparent;
-		position: absolute;
-		display: block;
-		content: '';
-		height: 0;
-		right: 0.5rem;
-		top: 50%;
-		width: 0;
-	}
-
-	thead th[tabindex]:not([aria-sort]):before,
-	thead th[aria-sort='ascending']:before {
-		border-bottom-color: currentColor;
-		margin-top: -14px;
-	}
-
-	thead th[tabindex]:not([aria-sort]):after,
-	thead th[aria-sort='descending']:after {
-		border-top-color: currentColor;
-		margin-top: 3px;
 	}
 
 	td,
