@@ -188,14 +188,15 @@
 			{#each fields as field}
 				{#if field.sortable}
 					<th
-						tabindex="0"
 						scope="col"
-						onclick={() => sortItems(field)}
-						onkeypress={({ key }) => key === 'Enter' && sortItems(field)}
 						aria-sort={(sortOrder === `${field.key}-asc` && 'ascending') ||
 							(sortOrder === `${field.key}-desc` && 'descending') ||
-							null}>{field.label}</th
+							null}
 					>
+						<button onclick={() => sortItems(field)}>
+							{field.label}
+						</button>
+					</th>
 				{:else if field.label}
 					<th scope="col">{field.label}</th>
 				{:else}
@@ -223,47 +224,31 @@
 			</tr>
 		{/each}
 	</tbody>
-
-	<tfoot>
-		<tr>
-			<td>
-				<div>
-					{#if filteredListItems.length === 0}
-						No results
-					{:else}
-						{@const pageStart = pageSize * (currentPage - 1) + 1}
-						<span>
-							Showing <strong>{pageStart}</strong> to
-							<strong>
-								{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
-							</strong>
-							of <strong>{filteredListItems.length.toLocaleString()}</strong>
-						</span>
-
-						<button
-							disabled={currentPage === 1}
-							onclick={() => (currentPage -= 1)}
-							onkeypress={({ code }) => {
-								if (code === 'Enter') currentPage -= 1;
-							}}
-						>
-							&laquo; Previous
-						</button>
-						<button
-							disabled={currentPage * pageSize >= filteredListItems.length}
-							onclick={() => (currentPage += 1)}
-							onkeypress={({ code }) => {
-								if (code === 'Enter') currentPage += 1;
-							}}
-						>
-							Next &raquo;
-						</button>
-					{/if}
-				</div>
-			</td>
-		</tr>
-	</tfoot>
 </table>
+<div class="pagination">
+	{#if filteredListItems.length === 0}
+		No results
+	{:else}
+		{@const pageStart = pageSize * (currentPage - 1) + 1}
+		<span aria-live="assertive">
+			Showing <strong>{pageStart}</strong> to
+			<strong>
+				{Math.min(pageStart + pageSize - 1, filteredListItems.length)}
+			</strong>
+			of <strong>{filteredListItems.length.toLocaleString()}</strong>
+		</span>
+
+		<button disabled={currentPage === 1} onclick={() => (currentPage -= 1)}>
+			&laquo; Previous
+		</button>
+		<button
+			disabled={currentPage * pageSize >= filteredListItems.length}
+			onclick={() => (currentPage += 1)}
+		>
+			Next &raquo;
+		</button>
+	{/if}
+</div>
 
 <style>
 	table {
@@ -326,37 +311,49 @@
 		text-align: left;
 		font-weight: normal;
 
-		&[tabindex] {
+		button {
+			appearance: none;
+			background-color: transparent;
+			border: none;
+			color: inherit;
 			cursor: pointer;
+			font: inherit;
+			height: 100%;
+			left: 0;
+			padding: inherit;
+			position: absolute;
+			text-align: inherit;
+			top: 0;
+			width: 100%;
+
+			&:before,
+			&:after {
+				border: 6px solid transparent;
+				position: absolute;
+				display: block;
+				content: '';
+				height: 0;
+				right: 0.5rem;
+				top: 50%;
+				width: 0;
+			}
+		}
+
+		&:not([aria-sort]) button:before,
+		&[aria-sort='ascending'] button:before {
+			border-bottom-color: currentColor;
+			margin-top: -14px;
+		}
+
+		&:not([aria-sort]) button:after,
+		&[aria-sort='descending'] button:after {
+			border-top-color: currentColor;
+			margin-top: 3px;
 		}
 	}
 
 	tbody th {
 		text-align: left;
-	}
-
-	thead th[tabindex]:before,
-	thead th[tabindex]:after {
-		border: 6px solid transparent;
-		position: absolute;
-		display: block;
-		content: '';
-		height: 0;
-		right: 0.5rem;
-		top: 50%;
-		width: 0;
-	}
-
-	thead th[tabindex]:not([aria-sort]):before,
-	thead th[aria-sort='ascending']:before {
-		border-bottom-color: currentColor;
-		margin-top: -14px;
-	}
-
-	thead th[tabindex]:not([aria-sort]):after,
-	thead th[aria-sort='descending']:after {
-		border-top-color: currentColor;
-		margin-top: 3px;
 	}
 
 	td,
@@ -366,39 +363,15 @@
 		line-height: var(--row-height);
 	}
 
-	tfoot td {
-		display: contents;
+	.pagination {
+		align-items: center;
+		display: flex;
+		gap: 1rem;
+		margin-top: 2rem;
+		padding: 0 0.5rem;
 
-		div {
-			margin-top: 2rem;
-			display: flex;
-			gap: 1rem;
-			align-items: center;
-
-			span {
-				flex-grow: 1;
-			}
-		}
-
-		button {
-			background-color: var(--primary-color);
-			border: 1px solid #d2d6dc;
-			border-radius: 5px;
-			color: #ffffff;
-			cursor: pointer;
-			line-height: 1;
-			padding: 5px 14px;
-			user-select: none;
-
-			&[disabled] {
-				cursor: not-allowed;
-				opacity: 0.5;
-			}
-
-			&:not([disabled]):hover {
-				background-color: #f7f7f7;
-				color: #3c4257;
-			}
+		span {
+			flex-grow: 1;
 		}
 	}
 </style>

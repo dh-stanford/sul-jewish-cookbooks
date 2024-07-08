@@ -112,17 +112,17 @@
 				}
 			}
 
-			thead th::before,
-			thead th::after {
+			thead th button::before,
+			thead th button::after {
 				opacity: 0.3;
 			}
 
-			thead th[aria-sort]::before,
-			thead th[aria-sort]::after {
+			thead th[aria-sort] button::before,
+			thead th[aria-sort] button::after {
 				opacity: 1;
 			}
 
-			thead th[tabindex]:hover {
+			thead th button:hover {
 				background-color: #d6daf0;
 
 				&::before,
@@ -136,6 +136,31 @@
 				td.search {
 					justify-content: flex-start;
 					margin-top: 1rem;
+				}
+			}
+		}
+	}
+
+	:global(.pagination) {
+		:global {
+			button {
+				background-color: var(--primary-color);
+				border: 1px solid #d2d6dc;
+				border-radius: 5px;
+				color: #ffffff;
+				cursor: pointer;
+				line-height: 1;
+				padding: 5px 14px;
+				user-select: none;
+
+				&[disabled] {
+					cursor: not-allowed;
+					opacity: 0.5;
+				}
+
+				&:not([disabled]):hover {
+					background-color: #f7f7f7;
+					color: #3c4257;
 				}
 			}
 		}
