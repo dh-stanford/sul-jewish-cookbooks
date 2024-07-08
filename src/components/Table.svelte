@@ -241,21 +241,12 @@
 							of <strong>{filteredListItems.length.toLocaleString()}</strong>
 						</span>
 
-						<button
-							disabled={currentPage === 1}
-							onclick={() => (currentPage -= 1)}
-							onkeypress={({ code }) => {
-								if (code === 'Enter') currentPage -= 1;
-							}}
-						>
+						<button disabled={currentPage === 1} onclick={() => (currentPage -= 1)}>
 							&laquo; Previous
 						</button>
 						<button
 							disabled={currentPage * pageSize >= filteredListItems.length}
 							onclick={() => (currentPage += 1)}
-							onkeypress={({ code }) => {
-								if (code === 'Enter') currentPage += 1;
-							}}
 						>
 							Next &raquo;
 						</button>
