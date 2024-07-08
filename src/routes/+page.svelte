@@ -158,9 +158,15 @@
 					opacity: 0.5;
 				}
 
-				&:not([disabled]):hover {
+				&:not([disabled]):hover,
+				&:focus-visible {
 					background-color: #f7f7f7;
 					color: #3c4257;
+				}
+
+				&:focus-visible {
+					outline: 2px solid var(--primary-color);
+					outline-offset: 2px;
 				}
 			}
 		}
