@@ -46,7 +46,7 @@
 		{ key: 'link', label: '', accessor: 6, format: formatLink, html: true }
 	];
 
-	recipes.forEach((recipe, i) => (recipe[7] = i));
+	recipes.forEach((recipe, i) => (recipe[7] = i.toString()));
 </script>
 
 <Table data={recipes} {fields} keyAccessor={7} id="recipes-table" />
