@@ -15,11 +15,11 @@ def parse_csv(input):
     parsed = []
 
     with open(input, "r") as _fh:
-        reader = csv.DictReader(_fh)
+        reader = csv.DictReader(_fh, delimiter="\t")
         for i, row in enumerate(reader):
-            del row["File"]
+            # del row["File"]
             if not any(_ for _ in row.values()):
-                logging.warn("Empty row: %s", i)
+                logging.warning("Empty row: %s", i)
                 continue
             parsed.append(list(row.values()))
 
