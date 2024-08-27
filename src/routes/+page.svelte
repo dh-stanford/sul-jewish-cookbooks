@@ -12,11 +12,11 @@
 			.join(' ');
 	};
 
-	/** @param {string} id */
-	const formatLink = (id) => {
-		if (!id) return '';
+	/** @param {string} url */
+	const formatLink = (url) => {
+		if (!url) return '';
 		return `
-		  <a href="https://searchworks.stanford.edu/view/${id}" aria-label="View on SearchWorks">
+		  <a href="${url}" aria-label="View on SearchWorks">
 				${externalLinkSvg}
 			</a>`;
 	};
